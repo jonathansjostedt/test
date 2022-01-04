@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd"><file:config name="File_Config" doc:name="File Config" doc:id="68218174-e00f-4c3d-9cf2-af91389039a7" >
+		<file:connection workingDir="C:\Users\chris\AnypointStudio\MediCarrier\s-medicarrier-ehandel\products" />
+	</file:config>
+	<flow name="s-medicarrier-ehandel" doc:id="b404615f-e643-4f25-97f0-36497a0d5289" >
+		<http:listener doc:name="Listener" doc:id="1af35702-03cf-4271-a796-a6c6b10a660d" config-ref="HTTP_Listener_config" path="/emptyqueue"/>
+		<logger level="INFO" doc:name="Logger" doc:id="cb5b33e1-be22-42f3-a96e-f4683d3ec7d8" message="s-medicarrier-ehandel START" category="system.ehandel.start"/>
+		<jms:consume doc:name="Consume" doc:id="e8d1b0a1-0a0c-47af-920d-c0ba966ee541" config-ref="JMS_Config" destination="q-lager"/>
+		<file:write doc:name="Write" doc:id="702f2672-62d1-48f1-be43-799672799fa5" path='#[payload.product.number ++ ".json"]' config-ref="File_Config"/>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="b20b2db1-3212-4138-a6bf-e6221de2e907" >
+				<ee:transform doc:name="Transform Message" doc:id="d20f03fd-8d9f-4cde-af1e-fb21642398d1" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	errorMessage: "no messages found on queue"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-continue>
+		</error-handler>
+		
+	
+</flow>
+	<flow name="s-medicarrier-ehandel-customer" doc:id="4cf439b0-2036-47ec-9385-ce7a21e5a84c" >
+		<http:listener doc:name="Listener" doc:id="54a7cd6d-0894-4371-878c-a66e9fd1b222" config-ref="HTTP_Listener_config" path="/emptyqueue" />
+		<logger level="INFO" doc:name="Logger" doc:id="dda6014d-6650-42ce-8906-50893e055de0" message="s-medicarrier-ehandel START" category="system.ehandel.start" />
+		<jms:consume doc:name="Consume" doc:id="21128621-a826-4d21-ad13-b3fead5fba37" config-ref="JMS_Config" destination="q-lager" />
+		<file:write doc:name="Write" doc:id="ef1ddcf7-91f8-4c35-a512-0f6dcbd384fd" config-ref="File_Config" path='#[payload.customer.number ++ ".json"]' />
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="e529a95f-797d-464f-a90f-255d22ccbd7e" >
+				<ee:transform doc:name="Transform Message" doc:id="4cc5a8b2-6c3f-42ad-b426-4fae25b1c53a" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	errorMessage: "no messages found on queue"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+</mule>

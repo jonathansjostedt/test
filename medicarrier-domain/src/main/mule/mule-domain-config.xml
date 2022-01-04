@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain:mule-domain
+        xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+        xmlns:http="http://www.mulesoft.org/schema/mule/http"
+        xmlns="http://www.mulesoft.org/schema/mule/core"
+        xmlns:domain="http://www.mulesoft.org/schema/mule/ee/domain"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+               http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+               http://www.mulesoft.org/schema/mule/ee/domain http://www.mulesoft.org/schema/mule/ee/domain/current/mule-domain-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e382c1f8-162a-47f4-9d3b-67a6941b90b8" >
+		<http:listener-connection host="0.0.0.0" port="8081" connectionIdleTimeout="3000000"/>
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="073ed3ba-0484-4426-8829-c38ee36cb7d5" basePath="/api/" responseTimeout="120000">
+		<http:request-connection host="localhost" port="8081" connectionIdleTimeout="3000000"/>
+		<expiration-policy maxIdleTime="15" timeUnit="MINUTES" />
+	</http:request-config>
+	<jms:config name="JMS_Config" doc:name="JMS Config" doc:id="88264db4-c047-42fe-a5de-685a57a008a3" >
+		<jms:active-mq-connection username="test" password="abc123"/>
+	</jms:config>
+
+
+    <!-- configure here resource to be shared within the domain -->
+
+</domain:mule-domain>

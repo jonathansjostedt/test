@@ -1,0 +1,31 @@
+{
+  "product": {
+    "number": "58312",
+    "description_1": "KATETER TAPPNING 18CM NR18 S",
+    "description_2": "RÖD KONA PLAST NELATON FP100",
+    "group_code": "000"
+  },
+  "vendor": {
+    "product_number": "306574",
+    "number": "LÅSSMEDERNA VALLENTUNA-ÖSTERÅK"
+  },
+  "sales": {
+    "unit": "RÖR"
+  },
+  "quantity": {
+    "min_quantity": "PÅS",
+    "min_quantity_package": [
+      "AFP",
+      "TL",
+      "ST",
+      "TRP"
+    ]
+  },
+  "article_type": "Lagerförd artikel",
+  "codes": {
+    "area": "0",
+    "division": "SLS",
+    "item_group": "000",
+    "statistical_group": "001"
+  }
+}

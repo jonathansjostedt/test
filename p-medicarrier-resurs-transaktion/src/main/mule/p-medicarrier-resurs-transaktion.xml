@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd">
+	<flow name="p-medicarrier-resurs-transaktionFlow" doc:id="b1af0519-919e-42d7-9b33-f62082f01590" >
+		<jms:listener doc:name="Listener" doc:id="37e215af-7136-473c-9210-789245d1bd2c" config-ref="JMS_Config" destination="q-uppdaterad-resurs"/>
+		<logger level="INFO" doc:name="Logger" doc:id="f750d806-8086-48df-9d80-c4f8ec16d199" message="TESTQUEUE!" category="process.resurs.test"/>
+		<jms:publish doc:name="Publish q-lager" doc:id="dfaa7efb-b159-4067-a728-c14ea24474b1" config-ref="JMS_Config" destination="q-lager"/>
+		<jms:publish doc:name="Publish q-edi" doc:id="ce80bfb0-6f8a-4b5b-99d6-3dbfcfde1cc7" destination="q-edi"/>
+	</flow>
+	<flow name="p-medicarrier-customer-transaktionFlow" doc:id="62ec562e-d0bb-421b-91aa-1f434d4338e1" >
+		<jms:listener doc:name="Listener" doc:id="d64f771b-8397-4a4b-bca5-7a541544d3ec" config-ref="JMS_Config" destination="q-uppdaterad-customer" />
+		<logger level="INFO" doc:name="Logger" doc:id="a29a31df-6eac-4269-b7be-9b3ed74414c8" message="TESTQUEUE!" category="process.resurs.test" />
+		<jms:publish doc:name="Publish q-lager" doc:id="0f8f503b-d5b5-4def-b155-318d111413f7" config-ref="JMS_Config" destination="q-lager" />
+		<jms:publish doc:name="Publish q-edi" doc:id="d9f0769c-28db-474f-a58f-947d74a0f069" destination="q-edi" />
+	</flow>
+
+</mule>

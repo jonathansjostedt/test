@@ -1,0 +1,30 @@
+{
+  "product": {
+    "number": "59312",
+    "description_1": "TRÄSKOR VITA NORMAL VRIST NR37",
+    "group_code": "001"
+  },
+  "vendor": {
+    "product_number": "306574",
+    "number": "LÅSSMEDERNA VALLENTUNA-ÖSTERÅK"
+  },
+  "sales": {
+    "unit": "RÖR"
+  },
+  "min_quantity": {
+    "min_quantity": "PÅS",
+    "min_quantity_package": [
+      "AFP",
+      "TL",
+      "ST",
+      "TRP"
+    ]
+  },
+  "article_type": "Lagerförd artikel",
+  "codes": {
+    "area": "0",
+    "division": "SLS",
+    "item_group": "001",
+    "statistical_group": "001"
+  }
+}

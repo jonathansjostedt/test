@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="product" format="json">
+      <types:shape format="weave" example="examples/product.json"><![CDATA[%dw 2.0
+
+type product = {|
+  product: {|
+    number: String, 
+    description_1: String, 
+    description_2: String, 
+    group_code: String
+  |}, 
+  vendor: {|
+    product_number: String, 
+    number: String
+  |}, 
+  sales: {| unit: String |}, 
+  min_quantity: {|
+    min_quantity: String, 
+    min_quantity_package: Array<String>
+  |}, 
+  article_type: String, 
+  codes: {|
+    area: String, 
+    division: String, 
+    item_group: String, 
+    statistical_group: String
+  |}
+|} {"example": "{\\\"product\\\":{\\\"number\\\":\\\"59312\\\",\\\"description_1\\\":\\\"KATETER TAPPNING 18CM NR18 S\\\",\\\"description_2\\\":\\\"R\u00D6D KONA PLAST NELATON FP100\\\",\\\"group_code\\\":\\\"000\\\"},\\\"vendor\\\":{\\\"product_number\\\":\\\"306574\\\",\\\"number\\\":\\\"L\u00C5SSMEDERNA VALLENTUNA-\u00D6STER\u00C5K\\\"},\\\"sales\\\":{\\\"unit\\\":\\\"R\u00D6R\\\"},\\\"min_quantity\\\":{\\\"min_quantity\\\":\\\"P\u00C5S\\\",\\\"min_quantity_package\\\":[\\\"AFP\\\",\\\"TL\\\",\\\"ST\\\",\\\"TRP\\\"]},\\\"article_type\\\":\\\"Lagerf\u00F6rd artikel\\\",\\\"codes\\\":{\\\"area\\\":\\\"0\\\",\\\"division\\\":\\\"SLS\\\",\\\"item_group\\\":\\\"000\\\",\\\"statistical_group\\\":\\\"001\\\"}}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#e8d1b0a1-0a0c-47af-920d-c0ba966ee541">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="product"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
